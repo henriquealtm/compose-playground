@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ComposePlayground</string>
+    <string name="logo_description">Logo</string>
+    <string name="email">Email</string>
+
+
+    <string name="test">%s after param</string>
+</resources>
