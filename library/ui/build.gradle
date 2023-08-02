@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: "${rootProject.projectDir}/flavors.gradle"
+
 android {
     namespace 'com.example.composeplayground.ui'
     compileSdk 33
@@ -34,6 +36,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.7'
     }
+
+    with flavorConfig
 }
 
 dependencies {

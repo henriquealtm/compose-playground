@@ -1,0 +1,29 @@
+ext.flavorConfig = {
+
+    flavorDimensions 'app'
+    productFlavors {
+        enduser {
+            dimension 'app'
+            ext.myApplicationIdSuffix = '.enduser'
+            manifestPlaceholders.appName = "ComposePlayground - End user"
+        }
+        technician {
+            dimension 'app'
+            ext.myApplicationIdSuffix = '.technician'
+            manifestPlaceholders.appName = "ComposePlayground - Technician"
+        }
+    }
+
+    productFlavors.all { flavor ->
+        if (flavor.hasProperty('myApplicationIdSuffix') && isApplicationProject()) {
+            flavor.applicationIdSuffix = flavor.myApplicationIdSuffix
+        }
+    }
+
+}
+
+def isApplicationProject() {
+    return project.android.class.simpleName.startsWith('BaseAppModuleExtension')
+    // in AGP 3.1.x with library modules instead of feature modules:
+    // return project.android instanceof com.android.build.gradle.AppExtension
+}

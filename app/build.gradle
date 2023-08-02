@@ -6,6 +6,8 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+apply from: "${rootProject.projectDir}/flavors.gradle"
+
 android {
     namespace 'com.example.composeplayground'
     compileSdk 33
@@ -56,6 +58,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    with flavorConfig
 }
 
 dependencies {
