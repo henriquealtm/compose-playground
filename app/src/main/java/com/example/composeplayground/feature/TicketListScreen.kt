@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,13 +25,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composeplayground.commons.NForwardIcon
-import com.example.composeplayground.commons.NHorizontalSpacer
-import com.example.composeplayground.commons.NPrimaryButton
-import com.example.composeplayground.commons.NTabRow
-import com.example.composeplayground.commons.NVerticalSpacer
 import com.example.composeplayground.commons.TicketItem
-import androidx.compose.foundation.lazy.items
+import com.example.composeplayground.ui.NForwardIcon
+import com.example.composeplayground.ui.NHorizontalSpacer
+import com.example.composeplayground.ui.NPrimaryButton
+import com.example.composeplayground.ui.NTabRow
+import com.example.composeplayground.ui.NVerticalSpacer
 
 val activeItems = listOf(
     TicketItem(
@@ -48,7 +48,6 @@ val activeItems = listOf(
         lastInteractionFormattedDate = "03/30/2023",
     ),
 )
-
 
 @Composable
 fun TicketListScreen() {
@@ -73,7 +72,6 @@ fun TicketListScreen() {
         )
     }
 }
-
 
 @Composable
 private fun TicketTabs(

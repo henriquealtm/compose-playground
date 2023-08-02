@@ -8,14 +8,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.composeplayground.R
-import com.example.composeplayground.commons.GreetingsHeader
-import com.example.composeplayground.commons.NCard
-import com.example.composeplayground.commons.NHeaderText
-import com.example.composeplayground.commons.NVerticalSpacer
 import com.example.composeplayground.commons.SwitchUserTypeSection
-import com.example.composeplayground.commons.TicketSection
 import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.ui.GreetingsHeader
+import com.example.composeplayground.ui.NCard
+import com.example.composeplayground.ui.NHeaderText
+import com.example.composeplayground.ui.NVerticalSpacer
+import com.example.composeplayground.ui.TicketSection
+import com.example.composeplayground.ui.uiDrawable
 
 @Composable
 fun EndUserHomeScreen(
@@ -59,7 +59,7 @@ fun EndUserHomeScreen(
             )
             NVerticalSpacer(height = 16.dp)
             NCard(
-                icon = R.drawable.ic_support,
+                icon = uiDrawable.ic_support,
                 iconDescription = "",
                 title = "Support",
                 description = "See your support options",

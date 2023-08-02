@@ -18,13 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.composeplayground.R
-import com.example.composeplayground.commons.NCard
-import com.example.composeplayground.commons.NHeaderText
-import com.example.composeplayground.commons.NHorizontalSpacer
-import com.example.composeplayground.commons.NVerticalSpacer
 import com.example.composeplayground.commons.SwitchUserTypeSection
 import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.ui.NCard
+import com.example.composeplayground.ui.NHeaderText
+import com.example.composeplayground.ui.NHorizontalSpacer
+import com.example.composeplayground.ui.NVerticalSpacer
+import com.example.composeplayground.ui.uiDrawable
 
 @Composable
 fun TechnicianHomeScreen(
@@ -54,14 +54,14 @@ fun TechnicianHomeScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             ServerCard(
-                iconId = R.drawable.ic_healthy,
+                iconId = uiDrawable.ic_healthy,
                 "Server (0)",
                 modifier = Modifier.weight(1f)
             ) {
                 onServerCardClick()
             }
             ServerCard(
-                iconId = R.drawable.ic_threat,
+                iconId = uiDrawable.ic_threat,
                 "Threats (0)",
                 modifier = Modifier.weight(1f),
             ) {
@@ -70,14 +70,14 @@ fun TechnicianHomeScreen(
         }
         Row {
             ServerCard(
-                iconId = R.drawable.ic_patch,
+                iconId = uiDrawable.ic_patch,
                 "Patches (12)",
                 modifier = Modifier.weight(1f),
             ) {
                 onPatchCardClick()
             }
             ServerCard(
-                iconId = R.drawable.ic_alert,
+                iconId = uiDrawable.ic_alert,
                 "Alert (0)",
                 modifier = Modifier.weight(1f),
             ) {
@@ -91,7 +91,7 @@ fun TechnicianHomeScreen(
         )
         NVerticalSpacer(height = 16.dp)
         NCard(
-            icon = R.drawable.ic_organization,
+            icon = uiDrawable.ic_organization,
             iconDescription = "",
             title = "Organizations (12)",
             onClick = onOrganizationCardClick,
@@ -101,7 +101,7 @@ fun TechnicianHomeScreen(
         )
         NVerticalSpacer(height = 16.dp)
         NCard(
-            icon = R.drawable.ic_ticket,
+            icon = uiDrawable.ic_ticket,
             iconDescription = "",
             title = "Tickets (15)",
             onClick = onTicketCardClick,
