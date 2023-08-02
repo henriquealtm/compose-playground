@@ -1,6 +1,7 @@
 package com.example.composeplayground.commons
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,14 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.Switch
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +36,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeplayground.R
+import com.example.composeplayground.domain.SessionUseCase
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun NVerticalSpacer(height: Dp) {
@@ -212,6 +218,86 @@ fun NTabRow(
                 modifier = Modifier.height(56.dp)
             )
         }
+    }
+}
+
+
+
+@Composable
+fun GreetingsHeader(
+    modifier: Modifier,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = "Hello, Henri!",
+            color = Color.Black,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Text(
+            text = "Welcome to your Dashboard",
+            color = Color.Gray,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+        )
+    }
+}
+
+@Composable
+fun TicketSection(
+    ticketSectionTitle: String,
+    onTicketClick: () -> Unit,
+    modifier: Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        NCard(
+            icon = R.drawable.ic_ticket,
+            iconDescription = "",
+            title = ticketSectionTitle,
+            onClick = onTicketClick,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+
+@Composable
+fun SwitchUserTypeSection(
+    isTechnician: State<Boolean>,
+    sessionUseCase: SessionUseCase,
+    coroutineScope: CoroutineScope
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
+        Text(
+            text = "Change User",
+            color = Color.Black,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Medium,
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Technician")
+            Switch(
+                checked = isTechnician.value,
+                onCheckedChange = {
+                    sessionUseCase.updateIsTechnician(coroutineScope, it)
+                },
+            )
+        }
+        NVerticalSpacer(height = 8.dp)
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color.LightGray)
+        )
     }
 }
 
