@@ -9,6 +9,7 @@ import com.example.composeplayground.commons.navigation.Navigator
 import com.example.composeplayground.commons.navigation.deeplink.IDeeplinkHandler
 import com.example.composeplayground.domain.SessionUseCase
 import com.example.composeplayground.navigation.NavigationHost
+import com.example.composeplayground.notification.Notification
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,6 +36,7 @@ class MainActivity : ComponentActivity() {
             )
         }
         handleIntent(intent)
+        Notification.create(applicationContext)
     }
 
     override fun onNewIntent(intent: Intent?) {

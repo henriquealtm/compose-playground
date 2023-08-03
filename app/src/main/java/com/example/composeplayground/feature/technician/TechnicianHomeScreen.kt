@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.composeplayground.commons.SwitchUserTypeSection
 import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.feature.DeeplinkComponent
 import com.example.composeplayground.ui.NCard
 import com.example.composeplayground.ui.NHeaderText
 import com.example.composeplayground.ui.NHorizontalSpacer
@@ -109,6 +111,9 @@ fun TechnicianHomeScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
+        NVerticalSpacer(height = 24.dp)
+        Divider(color = Color.LightGray)
+        DeeplinkComponent()
     }
 }
 

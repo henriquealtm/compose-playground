@@ -1,6 +1,7 @@
 package com.example.composeplayground.navigation
 
 import com.example.composeplayground.commons.navigation.deeplink.IDeeplinkProcessor
+import com.example.composeplayground.support.navigation.SupportDeeplinkProcessor
 import com.example.composeplayground.ticketing.ticket.navigation.TicketDeeplinkProcessor
 import dagger.Binds
 import dagger.Module
@@ -16,6 +17,12 @@ interface DeepLinkProcessorModule {
     @IntoSet
     fun bindsTicketDeeplinkProcessor(
         ticketDeeplinkProcessor: TicketDeeplinkProcessor
+    ): IDeeplinkProcessor
+
+    @Binds
+    @IntoSet
+    fun bindsSupportDeeplinkProcessor(
+        supportDeeplinkProcessor: SupportDeeplinkProcessor
     ): IDeeplinkProcessor
 
 }

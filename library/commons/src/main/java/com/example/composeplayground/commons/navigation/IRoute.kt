@@ -4,7 +4,7 @@ import com.example.composeplayground.commons.user.UserType
 
 interface IRoute {
 
-    fun getRoute(userType: UserType): String
+    fun getRoute(userType: UserType? = null): String
 
     fun checkPermission(userType: UserType): Boolean
 

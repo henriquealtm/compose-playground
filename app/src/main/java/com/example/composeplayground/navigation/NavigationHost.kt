@@ -12,10 +12,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import com.example.composeplayground.commons.user.UserType
 import com.example.composeplayground.domain.SessionUseCase
 import com.example.composeplayground.feature.enduser.EndUserHomeScreen
 import com.example.composeplayground.feature.technician.TechnicianHomeScreen
+import com.example.composeplayground.support.SupportScreen
+import com.example.composeplayground.support.navigation.SupportRoute
 import com.example.composeplayground.ticketing.ticket.navigation.TicketRoute
 import com.example.composeplayground.ticketing.ticket.presentation.TicketListScreen
 
@@ -106,11 +109,20 @@ fun EndUserNavigationHost(
                 onTicketCardClick = {
                     navController.navigate(TicketRoute.TicketList.getRoute(UserType.END_USER))
                 },
+                onSupportCardClick = {
+                    navController.navigate(SupportRoute.SupportScreen.getRoute(UserType.END_USER))
+                },
                 sessionUseCase,
             )
         }
         composable(TicketRoute.TicketList.getRoute(UserType.END_USER)) {
             TicketListScreen()
+        }
+        composable(
+            SupportRoute.SupportScreen.getRoute(UserType.END_USER),
+            deepLinks = SupportRoute.SupportScreen.deepLinks
+        ) {
+            SupportScreen()
         }
     }
 }

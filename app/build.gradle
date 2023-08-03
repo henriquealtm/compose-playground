@@ -63,6 +63,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:support"))
     implementation(project(":feature:ticketing"))
     implementation(project(":library:commons"))
     implementation(project(":library:ui"))
