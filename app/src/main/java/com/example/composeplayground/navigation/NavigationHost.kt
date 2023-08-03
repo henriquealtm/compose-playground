@@ -12,10 +12,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.composeplayground.commons.user.UserType
 import com.example.composeplayground.domain.SessionUseCase
-import com.example.composeplayground.feature.TicketListScreen
 import com.example.composeplayground.feature.enduser.EndUserHomeScreen
 import com.example.composeplayground.feature.technician.TechnicianHomeScreen
+import com.example.composeplayground.ticketing.ticket.navigation.TicketRoute
+import com.example.composeplayground.ticketing.ticket.presentation.TicketListScreen
 
 @Composable
 fun NavigationHost(
@@ -57,7 +59,7 @@ fun TechnicianNavigationHost(
                     navController.navigate("technician_device_organization_list")
                 },
                 onTicketCardClick = {
-                    navController.navigate("technician_ticket_list")
+                    navController.navigate(TicketRoute.TicketList.getRoute(UserType.TECHNICIAN))
                 },
                 sessionUseCase,
             )
@@ -83,7 +85,7 @@ fun TechnicianNavigationHost(
                 Text(text = "Reed's Awseome Org", modifier = Modifier.padding(16.dp))
             }
         }
-        composable("technician_ticket_list") {
+        composable(TicketRoute.TicketList.getRoute(UserType.TECHNICIAN)) {
             TicketListScreen()
         }
     }
@@ -101,11 +103,13 @@ fun EndUserNavigationHost(
     ) {
         composable("end_user_home") {
             EndUserHomeScreen(
-                onTicketCardClick = { navController.navigate("end_user_ticket_list") },
+                onTicketCardClick = {
+                    navController.navigate(TicketRoute.TicketList.getRoute(UserType.END_USER))
+                },
                 sessionUseCase,
             )
         }
-        composable("end_user_ticket_list") {
+        composable(TicketRoute.TicketList.getRoute(UserType.END_USER)) {
             TicketListScreen()
         }
     }

@@ -14,5 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ComposePlayground"
 include ':app'
+include ':feature:ticketing'
 include ':library:commons'
 include ':library:ui'

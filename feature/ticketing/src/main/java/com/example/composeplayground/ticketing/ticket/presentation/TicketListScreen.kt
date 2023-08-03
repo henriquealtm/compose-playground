@@ -1,4 +1,4 @@
-package com.example.composeplayground.feature
+package com.example.composeplayground.ticketing.ticket.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composeplayground.commons.TicketItem
+import com.example.composeplayground.ticketing.ticket.domain.TicketItem
 import com.example.composeplayground.ui.NForwardIcon
 import com.example.composeplayground.ui.NHorizontalSpacer
 import com.example.composeplayground.ui.NPrimaryButton
