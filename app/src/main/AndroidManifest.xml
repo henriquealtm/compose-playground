@@ -23,6 +23,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--Accepts URIs that begin with https://app.ninjarmm.com -->
+                <data
+                    android:host="app.ninjarmm.com"
+                    android:scheme="https" />
+                <!--                android:pathPrefix="/technician"-->
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--Accepts URIs that begin with ninjarmm://assist -->
+                <data
+                    android:host="assist"
+                    android:scheme="ninjarmm" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
