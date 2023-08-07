@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.session.SessionUseCase
 import com.example.composeplayground.ui.NVerticalSpacer
 import kotlinx.coroutines.CoroutineScope
 

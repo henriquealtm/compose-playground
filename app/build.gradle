@@ -63,8 +63,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:login"))
+    implementation(project(":feature:support"))
     implementation(project(":feature:ticketing"))
     implementation(project(":library:commons"))
+    implementation(project(":library:session"))
     implementation(project(":library:ui"))
 
     implementation 'androidx.navigation:navigation-runtime-ktx:2.6.0'

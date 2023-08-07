@@ -1,6 +1,7 @@
 package com.example.composeplayground.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,11 +12,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
@@ -23,9 +31,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -252,3 +265,119 @@ fun TicketSection(
     }
 }
 
+@Composable
+fun NTextField(
+    value: String?,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = LocalTextStyle.current,
+    placeHolderString: String? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    errorMessageString: String? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    singleLine: Boolean = true,
+    maxLines: Int = 1,
+    placeHolderTextSize: TextUnit = 14.sp
+) {
+    Column {
+        OutlinedTextField(
+            textStyle = textStyle,
+            placeholder = placeHolderString?.let {
+                {
+                    Text(
+                        text = placeHolderString,
+                        color = Color.Black,
+                        fontSize = placeHolderTextSize,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = textStyle.textAlign,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            leadingIcon = leadingIcon,
+            trailingIcon = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+                    if (isError) {
+                        NFieldErrorIcon()
+                    }
+                    if (trailingIcon != null) {
+                        NHorizontalSpacer(width = 8.dp)
+                        trailingIcon()
+                    }
+                }
+            },
+            visualTransformation = visualTransformation,
+            value = value ?: "",
+            onValueChange = onValueChange,
+            isError = isError,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            modifier = modifier,
+            shape = RoundedCornerShape(4.dp),
+            singleLine = singleLine,
+            maxLines = maxLines,
+        )
+        if (isError && errorMessageString != null) {
+            NVerticalSpacer(height = 2.dp)
+            Text(
+                text = errorMessageString,
+                color = Color.Red,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+            )
+        }
+    }
+}
+
+@Composable
+fun NFieldErrorIcon() {
+    Icon(
+        modifier = Modifier.size(19.dp),
+        painter = painterResource(id = R.drawable.ic_error),
+        contentDescription = "",
+        tint = Color.Red,
+    )
+}
+
+@Composable
+fun NCheckBox(
+    text: String,
+    value: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Checkbox(
+            checked = value,
+            onCheckedChange = { checked -> onCheckedChange(checked) },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.Green,
+                uncheckedColor = Color.Gray,
+                checkmarkColor = Color.Black
+            ),
+        )
+        Text(text = text, color = Color.Black)
+    }
+}
+
+@Composable
+fun NLogo(
+    painterLogo: Painter,
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterLogo,
+        contentDescription = "",
+        modifier = modifier,
+    )
+}

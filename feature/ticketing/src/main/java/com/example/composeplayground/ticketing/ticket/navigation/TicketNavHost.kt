@@ -12,7 +12,7 @@ sealed class TicketRoute(
 
     object TicketList : TicketRoute("ticket_list", UserRoutePermission.ALL)
 
-    override fun getRoute(userType: UserType): String {
+    override fun getRoute(userType: UserType?): String {
         // permission.checkRoutePermission(userType)  ->  TODO maybe throw an exception?
         return permission.getPrefix() + path
     }

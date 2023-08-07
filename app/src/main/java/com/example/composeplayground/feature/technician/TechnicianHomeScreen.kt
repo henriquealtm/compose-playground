@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.composeplayground.commons.SwitchUserTypeSection
-import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.feature.DeeplinkComponent
+import com.example.composeplayground.navigation.DeeplinkViewModel
+import com.example.composeplayground.session.SessionUseCase
 import com.example.composeplayground.ui.NCard
 import com.example.composeplayground.ui.NHeaderText
 import com.example.composeplayground.ui.NHorizontalSpacer
@@ -34,12 +39,22 @@ fun TechnicianHomeScreen(
     onAlertCardClick: () -> Unit,
     onOrganizationCardClick: () -> Unit,
     onTicketCardClick: () -> Unit,
+    onDeepLink: (destination: String) -> Unit,
+    onLogout: () -> Unit,
     sessionUseCase: SessionUseCase,
+    deeplinkViewModel: DeeplinkViewModel
 ) {
     val isTechnician = sessionUseCase.isTechnician.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
-    Column {
+    val destination = deeplinkViewModel.destination.collectAsState().value
+    if (!destination.isNullOrEmpty()) {
+        onDeepLink(destination)
+    }
+
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
         SwitchUserTypeSection(
             isTechnician = isTechnician,
             sessionUseCase = sessionUseCase,
@@ -109,6 +124,9 @@ fun TechnicianHomeScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         )
+        NVerticalSpacer(height = 24.dp)
+        Divider(color = Color.LightGray)
+        DeeplinkComponent(sessionUseCase = sessionUseCase, onLogout = onLogout)
     }
 }
 

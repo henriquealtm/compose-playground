@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name="TestApplication"
         android:allowBackup="true"
@@ -16,6 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.ComposePlayground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -32,6 +35,7 @@
                 <!--Accepts URIs that begin with https://app.ninjarmm.com -->
                 <data
                     android:host="app.ninjarmm.com"
+                    android:pathPrefix="/assist/"
                     android:scheme="https" />
                 <!--                android:pathPrefix="/technician"-->
             </intent-filter>

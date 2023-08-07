@@ -3,13 +3,17 @@ package com.example.composeplayground.feature.enduser
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.composeplayground.commons.SwitchUserTypeSection
-import com.example.composeplayground.domain.SessionUseCase
+import com.example.composeplayground.feature.DeeplinkComponent
+import com.example.composeplayground.navigation.DeeplinkViewModel
+import com.example.composeplayground.session.SessionUseCase
 import com.example.composeplayground.ui.GreetingsHeader
 import com.example.composeplayground.ui.NCard
 import com.example.composeplayground.ui.NHeaderText
@@ -20,10 +24,20 @@ import com.example.composeplayground.ui.uiDrawable
 @Composable
 fun EndUserHomeScreen(
     onTicketCardClick: () -> Unit,
+    onSupportCardClick: () -> Unit,
+    onDeepLink: (destination: String) -> Unit,
+    onLogout: () -> Unit,
     sessionUseCase: SessionUseCase,
+    deeplinkViewModel: DeeplinkViewModel
 ) {
+
     val isTechnician = sessionUseCase.isTechnician.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+
+    val destination = deeplinkViewModel.destination.collectAsState().value
+    if (!destination.isNullOrEmpty()) {
+        onDeepLink(destination)
+    }
 
     LazyColumn {
         item {
@@ -63,11 +77,16 @@ fun EndUserHomeScreen(
                 iconDescription = "",
                 title = "Support",
                 description = "See your support options",
-                onClick = { },
+                onClick = onSupportCardClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             )
+        }
+        item {
+            NVerticalSpacer(height = 24.dp)
+            Divider(color = Color.LightGray)
+            DeeplinkComponent(sessionUseCase = sessionUseCase, onLogout = onLogout)
         }
     }
 }
