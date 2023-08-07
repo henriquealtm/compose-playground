@@ -1,5 +1,7 @@
 package com.example.composeplayground.navigation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
@@ -7,12 +9,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navDeepLink
+import com.example.composeplayground.MainActivity
 import com.example.composeplayground.commons.user.UserType
 import com.example.composeplayground.domain.SessionUseCase
 import com.example.composeplayground.feature.enduser.EndUserHomeScreen
@@ -99,6 +102,8 @@ fun EndUserNavigationHost(
     navController: NavHostController,
     sessionUseCase: SessionUseCase,
 ) {
+    val context = LocalContext.current
+
     NavHost(
         navController = navController,
         route = "graph",
@@ -112,6 +117,14 @@ fun EndUserNavigationHost(
                 onSupportCardClick = {
                     navController.navigate(SupportRoute.SupportScreen.getRoute(UserType.END_USER))
                 },
+                onDeepLink = { deepLink ->
+                    val realIntent = Intent.parseUri("ninjarmm://assist/support", Intent.FLAG_ACTIVITY_NEW_TASK).apply {
+                        setAction(Intent.ACTION_VIEW)
+                        setClass(context, MainActivity::class.java)
+                    }
+
+                    navController.handleDeepLink(realIntent)
+                },
                 sessionUseCase,
             )
         }
@@ -120,7 +133,7 @@ fun EndUserNavigationHost(
         }
         composable(
             SupportRoute.SupportScreen.getRoute(UserType.END_USER),
-            deepLinks = SupportRoute.SupportScreen.deepLinks
+            deepLinks = SupportRoute.SupportScreen.deepLinks,
         ) {
             SupportScreen()
         }

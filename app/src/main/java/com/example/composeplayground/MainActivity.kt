@@ -1,12 +1,15 @@
 package com.example.composeplayground
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.composeplayground.commons.navigation.Navigator
-import com.example.composeplayground.commons.navigation.deeplink.IDeeplinkHandler
 import com.example.composeplayground.domain.SessionUseCase
 import com.example.composeplayground.navigation.NavigationHost
 import com.example.composeplayground.notification.Notification
@@ -19,38 +22,48 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var sessionUseCase: SessionUseCase
 
-    @Inject
-    lateinit var navigator: Navigator
-
-    @Inject
-    lateinit var deeplinkHandler: IDeeplinkHandler
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             NavigationHost(
-                navController = rememberNavController().also {
-                    navigator.setController(it)
+                navController = rememberNavController().apply {
+                    navController = this
                 },
                 sessionUseCase = sessionUseCase
             )
         }
-        handleIntent(intent)
+
+        val deepLink = intent.getStringExtra("deepLink")
+
+        Log.i("onCreate", intent.toString())
+        Log.i("onCreate - Extras", deepLink ?: "")
+
+        if ((deepLink ?: "").isNotEmpty()) {
+            Handler().postDelayed({
+//                val newIntent = Intent(
+//                    Intent.ACTION_VIEW,
+//                    Uri.parse("ninjarmm://assist/support")
+//                )
+                val realIntent = Intent.parseUri("ninjarmm://assist/support", Intent.FLAG_ACTIVITY_NEW_TASK).apply {
+                    setAction(Intent.ACTION_VIEW)
+                    setClass(this@MainActivity, MainActivity::class.java)
+                }
+                navController.handleDeepLink(realIntent)
+            }, 5000)
+        }
+
         Notification.create(applicationContext)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        handleIntent(intent)
-    }
+        Log.i("onNewItent", intent.toString())
+        Log.i("onNewItent - Extras", intent?.getStringExtra("deepLink") ?: "")
 
-    private fun handleIntent(intent: Intent?) {
-        intent?.data?.let {
-            deeplinkHandler.process(
-                deeplink = it,
-                userType = sessionUseCase.userType.value
-            )
-        }
+        sessionUseCase.deepLink.value = intent?.getStringExtra("deepLink")
     }
 
 }

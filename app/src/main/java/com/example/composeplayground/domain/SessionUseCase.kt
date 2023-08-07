@@ -7,6 +7,8 @@ import kotlinx.coroutines.launch
 
 class SessionUseCase {
 
+    val deepLink = MutableStateFlow<String?>(null)
+
     val isTechnician = MutableStateFlow(false)
     val userType = MutableStateFlow(UserType.END_USER)
 

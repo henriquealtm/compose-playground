@@ -9,10 +9,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
 import com.example.composeplayground.commons.SwitchUserTypeSection
 import com.example.composeplayground.domain.SessionUseCase
 import com.example.composeplayground.feature.DeeplinkComponent
+import com.example.composeplayground.feature.PATH
 import com.example.composeplayground.ui.GreetingsHeader
 import com.example.composeplayground.ui.NCard
 import com.example.composeplayground.ui.NHeaderText
@@ -24,8 +28,20 @@ import com.example.composeplayground.ui.uiDrawable
 fun EndUserHomeScreen(
     onTicketCardClick: () -> Unit,
     onSupportCardClick: () -> Unit,
+    onDeepLink: (String) -> Unit,
     sessionUseCase: SessionUseCase,
 ) {
+    val deepLink = sessionUseCase.deepLink.collectAsState().value
+    if (!deepLink.isNullOrEmpty()) {
+        onDeepLink(deepLink)
+//        val context = LocalContext.current.applicationContext
+//        val uriHandler = LocalUriHandler.current
+//        val navigate: (handler: UriHandler, url: String) -> Unit = { handler, url ->
+//            handler.openUri(url)
+//        }
+//        navigate(uriHandler, deepLink)
+    }
+
     val isTechnician = sessionUseCase.isTechnician.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 

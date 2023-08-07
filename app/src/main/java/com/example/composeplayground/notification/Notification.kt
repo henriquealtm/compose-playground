@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.composeplayground.MainActivity
 import com.example.composeplayground.R
 import kotlin.random.Random
 
@@ -42,22 +43,26 @@ object Notification {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && manager != null) {
             links.forEach { link ->
+//                val intent = Intent(applicationContext, MainActivity::class.java).apply {
+//                    putExtra("deepLink", "ninjarmm://assist/support")
+//                }
+
                 val intent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("ninjarmm://assist/${link.lowercase()}")
+                    Uri.parse("ninjarmm://assist/support"),
                 )
 
-                val activity = PendingIntent.getActivity(
+                val pendingIntent = PendingIntent.getActivity(
                     applicationContext,
                     0,
                     intent,
-                    PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT // TODO
                 )
 
                 val builder = NotificationCompat.Builder(applicationContext, channelId)
                     .setContentTitle(link)
                     .setContentText(description[Random.nextInt(0, description.size.dec())])
-                    .setContentIntent(activity)
+                    .setContentIntent(pendingIntent)
                     .setSmallIcon(R.drawable.frame_598)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
 
